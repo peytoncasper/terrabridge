@@ -11,6 +11,9 @@ const CodeConverter = () => {
   const [inputMetrics, setInputMetrics] = useState({ variables: 0, outputs: 0, resources: 0 });
   const [outputMetrics, setOutputMetrics] = useState({ variables: 0, outputs: 0, resources: 0 });
 
+  const backendUrl = process.env.BACKEND_URL || 'http://localhost:5001';
+
+
   const handleInputChange = (e) => {
     setInputCode(e.target.value);
   };
@@ -19,7 +22,7 @@ const CodeConverter = () => {
     setIsLoading(true);
 
     // Determine the input language
-    const languageResponse = await fetch('/determine-language', {
+    const languageResponse = await fetch(`${backendUrl}/determine-language`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,7 +36,7 @@ const CodeConverter = () => {
     setInputLanguage(languageData.language);
 
     // Analyze the input code
-    const analyzeResponse = await fetch('/analyze-code', {
+    const analyzeResponse = await fetch(`${backendUrl}/analyze-code`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -59,7 +62,7 @@ const CodeConverter = () => {
       template: inputCode,
     };
 
-   const convertResponse =  await fetch('/convert', {
+   const convertResponse =  await fetch(`${backendUrl}/convert`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +78,7 @@ const CodeConverter = () => {
 
     setOutputCode(convertedCode.convertedTemplate)
 
-    const outputLanguageResponse = await fetch('/determine-language', {
+    const outputLanguageResponse = await fetch(`${backendUrl}/determine-language`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -89,7 +92,7 @@ const CodeConverter = () => {
     setOutputLanguage(outputLangData.language);
 
     // Analyze the input code
-    const outputMetricsResponse = await fetch('/analyze-code', {
+    const outputMetricsResponse = await fetch(`${backendUrl}/analyze-code`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

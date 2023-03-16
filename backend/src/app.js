@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const convertRoute = require('../routes/convert');
 const determineLanguage = require('../routes/convert');
 const analyzeCode = require('../routes/convert');
+const cors = require('cors');
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.get('/', (req, res) => {
 
 // Start the server
 const PORT = process.env.PORT || 5001;
+app.use(cors());
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
