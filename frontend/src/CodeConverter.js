@@ -11,7 +11,7 @@ const CodeConverter = () => {
   const [inputMetrics, setInputMetrics] = useState({ variables: 0, outputs: 0, resources: 0 });
   const [outputMetrics, setOutputMetrics] = useState({ variables: 0, outputs: 0, resources: 0 });
 
-  const backendUrl = process.env.BACKEND_URL || 'http://localhost:5001';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
 
 
   const handleInputChange = (e) => {
@@ -78,7 +78,7 @@ const CodeConverter = () => {
 
     setOutputCode(convertedCode.convertedTemplate)
 
-    const outputLanguageResponse = await fetch(`${backendUrl}/determine-language`, {
+    const outputLanguageResponse = await fetch(`${backendUrl}//determine-language`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
